@@ -68,7 +68,7 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
         public async Task<ApiResponse<bool>> UpdateUserAsync(string userId, UpdateUserDto updateUserDto)
-        {
+            {
             try
             {
                 var user = _unitOfWork.UserRepository.GetUserById(userId);

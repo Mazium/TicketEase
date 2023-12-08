@@ -38,7 +38,13 @@ namespace TicketEase.Controllers
 			return Ok(await _boardServices.GetBoardByIdAsync(id));
 		}
 
-		[HttpGet("get-all-board-by-pagination")]
+        [HttpGet("GetBoardByManagerId")]
+        public async Task<ActionResult<ApiResponse<BoardResponseDto>>> GetBoardByManagerId(string managerId,  int page,  int perPage)
+        {
+            return Ok(await _boardServices.GetBoardsByManagerId(managerId,page,perPage));
+        }
+
+        [HttpGet("get-all-board-by-pagination")]
 		public async Task<IActionResult> GetAllBoards([FromQuery] int page, [FromQuery] int perPage)
 		{
 			try

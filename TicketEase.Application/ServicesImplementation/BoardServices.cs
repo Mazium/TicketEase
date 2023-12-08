@@ -56,7 +56,41 @@ namespace TicketEase.Application.ServicesImplementation
             }
         }
 
-        
+        public async Task<ApiResponse<GetBoardsDto>> GetBoardsByManagerId(string managerId, int perPage, int page)
+        {
+            try
+            {
+                var boards = _unitOfWork.BoardRepository.FindBoard(x=>x.ManagerId == managerId);
+
+                var boardDtos = _mapper.Map<List<BoardResponseDto>>(boards);
+
+                var pagedBoardDtos = await Pagination<BoardResponseDto>.GetPager(
+                    boardDtos,
+                    perPage,
+                    page,
+                    item => item.Name,
+                    item => item.Id
+                );
+
+                var getBoardsDto = new GetBoardsDto
+                {
+                    Boards = pagedBoardDtos.Data.ToList(),
+                    PerPage = pagedBoardDtos.PerPage,
+                    CurrentPage = pagedBoardDtos.CurrentPage,
+                    TotalPageCount = pagedBoardDtos.TotalPageCount,
+                    TotalCount = pagedBoardDtos.TotalCount
+                };
+
+                return new ApiResponse<GetBoardsDto>(true, "Boards retrieved.", 200, getBoardsDto, new List<string>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting all boards.");
+                return new ApiResponse<GetBoardsDto>(false, "Error occurred while getting all boards.", 500, null, new List<string> { ex.Message });
+            }
+        }
+
+
         public async Task<ApiResponse<GetBoardsDto>> GetAllBoardsAsync(int perPage, int page)
         {
             try

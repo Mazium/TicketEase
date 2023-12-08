@@ -48,7 +48,8 @@ namespace TicketEase.Application.ServicesImplementation
 
 			string generatedPassword = PasswordGenerator.GeneratePassword(managerCreateDto.BusinessEmail, managerCreateDto.CompanyName);
 			managerCreateDto.Password = generatedPassword;
-			string emailBody = $"Welcome to TicketEase. An account has been created for you with the following details<br>Email: {managerCreateDto.BusinessEmail}, <br>Password: {generatedPassword}";
+			string emailBody = $"Welcome to TicketEase. An account has been created for you with the following details<br>Email: {managerCreateDto.BusinessEmail}, <br>Password: {generatedPassword}." +
+				$"Follw this link to access your account http://localhost:3000/login";
 
 			var manager = new Manager()
 			{
@@ -266,9 +267,10 @@ namespace TicketEase.Application.ServicesImplementation
 				{
 					ToEmail = managerInfoCreateDto.AdminEmail,
 					Subject = "Manager Information",
-					Body = $"Business Email: {managerInfoCreateDto.BusinessEmail}\n" +
-						   $"Company Name: {managerInfoCreateDto.CompanyName}\n" +
-						   $"Reason to Onboard: {managerInfoCreateDto.CompanyDescription}"
+					Body = $"An organisation requests to use TicketEase with the following details:<br>" +
+					$"Business Email: {managerInfoCreateDto.BusinessEmail}<br>" +
+						   $"Company Name: {managerInfoCreateDto.CompanyName}<br>" +
+						   $"Company Description: {managerInfoCreateDto.CompanyDescription}"
 				};
                 await _emailServices.SendHtmlEmailAsync(mailRequest);
                 return ApiResponse<bool>.Success(true, "Manager information sent to admin successfully", 200);

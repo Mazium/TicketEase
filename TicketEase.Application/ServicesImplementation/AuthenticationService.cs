@@ -60,7 +60,7 @@ namespace TicketEase.Application.ServicesImplementation
 				var result = await _userManager.CreateAsync(appUser, appUserCreateDto.Password);
 				if (result.Succeeded)
 				{
-					await _userManager.AddToRoleAsync(appUser, "User");
+					await _userManager.AddToRoleAsync(appUser, "SuperAdmin");
 				}
 				return new ApiResponse<string>(true, StatusCodes.Status201Created, "User registered successfully");
 			}
@@ -177,8 +177,9 @@ namespace TicketEase.Application.ServicesImplementation
 			{
 				new Claim(JwtRegisteredClaimNames.Sub, contact.UserName),
 				new Claim(JwtRegisteredClaimNames.Email, contact.Email),
-				new Claim(JwtRegisteredClaimNames.Jti, contact.Id),
-				new Claim(ClaimTypes.Role, roles)
+				new Claim(JwtRegisteredClaimNames.Jti, contact.ManagerId),
+                new Claim(JwtRegisteredClaimNames.NameId, contact.Id),
+                new Claim(ClaimTypes.Role, roles)
 			};
 
 			var token = new JwtSecurityToken(
