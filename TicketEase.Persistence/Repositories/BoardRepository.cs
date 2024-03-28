@@ -30,9 +30,9 @@ namespace TicketEase.Persistence.Repositories
 		}
 		public void UpdateBoard(Board board) => Update(board);
 
-        public void DeleteAllBoards(List<Board> boards)
-        {
-            DeleteAll(boards);
-        }
-    }
+		public void DeleteAllBoards(List<Board> boards)
+		{
+			DeleteAll(boards);
+		}
+	}
 }

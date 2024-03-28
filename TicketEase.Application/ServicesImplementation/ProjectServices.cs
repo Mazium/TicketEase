@@ -61,7 +61,7 @@ namespace TicketEase.Application.ServicesImplementation
 
 				_logger.LogError(ex, "Error occurred while adding a board");
 				var errorList = new List<string>();
-				errorList.Add(ex.Message);
+				//errorList.Add(ex.Message);
 				response = ApiResponse<ProjectReponseDto>.Failed(false, "Error occurred while creating a project in a board",500, new List<string> { ex.Message });
 				return response;
 

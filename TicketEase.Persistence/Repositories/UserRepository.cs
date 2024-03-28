@@ -14,12 +14,12 @@ namespace TicketEase.Persistence.Repositories
 
 		public void DeleteUser(AppUser appUser) => Delete(appUser);
 
-        public List<AppUser> FindUser(Expression<Func<AppUser, bool>> condition)
-        {
-            var users = _ticketEaseDbContext.Set<AppUser>().AsQueryable().Where(condition).ToList();
-            var filteredUsers = users.Where(u => u.Id != u.ManagerId).ToList();
-            return filteredUsers;
-        }
+		public List<AppUser> FindUser(Expression<Func<AppUser, bool>> condition)
+		{
+			var users = _ticketEaseDbContext.Set<AppUser>().AsQueryable().Where(condition).ToList();
+			var filteredUsers = users.Where(u => u.Id != u.ManagerId).ToList();
+			return filteredUsers;
+		}
 
 
   //      public List<AppUser> FindUser(Expression<Func<AppUser, bool>> condition)
@@ -40,6 +40,6 @@ namespace TicketEase.Persistence.Repositories
 		public void UpdateUser(AppUser appUser) => Update(appUser);
 
 
-        public bool Exists(Expression<Func<AppUser, bool>> predicate)=> _ticketEaseDbContext.Set<AppUser>().Any(predicate);
-    }
+		public bool Exists(Expression<Func<AppUser, bool>> predicate)=> _ticketEaseDbContext.Set<AppUser>().Any(predicate);
+	}
 }
